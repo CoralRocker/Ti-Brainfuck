@@ -3,7 +3,5 @@ Have you ever worked on your calculator and lamented the lack of diverse program
 
 # Usage
 > Asm(prgmTIBF)
-<br>
-`Asm(` can be reached by `2nd + 0` and scroll to `Asm`.
-<br>
-`prgmTIBF` is the program called `TIBF` in the `prgm` screen.
+
+`Asm(` can be reached by `2nd + 0` and scroll to `Asm`. `prgmTIBF` is the program called `TIBF` in the `prgm` screen.
