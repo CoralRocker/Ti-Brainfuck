@@ -1,6 +1,11 @@
 # Ti-Brainfuck
 Have you ever worked on your calculator and lamented the lack of diverse programming languages available on it? LAMENT NO MORE! This program for your Ti-84 allows you to program in Brainfuck right in your calculator!
 
+# Installation
+This program is written in C using the toolchain available at https://github.com/CE-Programming/toolchain. In order to use it on your calculator, you will need the C Libraries installed on your calculator. They are available [here](https://github.com/CE-Programming/libraries/releases/tag/v8.8).
+
+Once you have the C libraries installed, simply use TI-Connect or TILP2 to send the program over to your calculator.
+
 # Usage
 > Asm(prgmTIBF)
 
