@@ -10,6 +10,7 @@ int main(int argc, char **argv)
 	uint16_t PTRSIZE;
 	short LOOPSIZE;
 	char *fname;
+	size_t fnameLen;
 	char c;
 
 	/* Pointer */
@@ -31,8 +32,12 @@ int main(int argc, char **argv)
 	ti_CloseAll();
 
 	/* Variable Instantiations */
-	fname = "OP";
-	
+	//fname = "OP";
+	fnameLen = 15;
+	fname = malloc(fnameLen+1);
+	os_GetStringInput("Brainfuck program to open:", fname, fnameLen);
+	boot_NewLine();	
+
 	PTRSIZE = 256;
 	LOOPSIZE = 32;
 
@@ -45,9 +50,10 @@ int main(int argc, char **argv)
 	tempLoop = l;
 	
 	f = ti_OpenVar(fname, "r", 5);
-	
+	free(fname);
+
 	if(!f){
-		os_PutStrFull("Program \"OP\" Not Found");
+		os_PutStrFull("Program Not Found!");
 		while(!os_GetCSC());
 		return 1;
 	}
