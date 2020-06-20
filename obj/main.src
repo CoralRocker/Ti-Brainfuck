@@ -54,42 +54,30 @@ _main:
 	CALL	_ti_CloseAll
 ;   33	
 ;   34		/* Variable Instantiations */
-;   35		//fname = "OP";
-;   36		fnameLen = 15;
-;   37		fname = malloc(fnameLen+1);
-	LD	BC,16
-	PUSH	BC
-	CALL	_malloc
-	POP	BC
-	LD	(IX+-15),HL
-;   38		os_GetStringInput("Brainfuck program to open:", fname, fnameLen);
-	LD	BC,15
-	PUSH	BC
-	LD	BC,(IX+-15)
-	PUSH	BC
+;   35		fname = "OP";
 	LD	BC,L__0
-	PUSH	BC
-	CALL	_os_GetStringInput
-	POP	BC
-	POP	BC
-	POP	BC
-;   39		boot_NewLine();	
-	CALL	_boot_NewLine
-;   40	
-;   41		PTRSIZE = 256;
-;   42		LOOPSIZE = 32;
-;   43	
-;   44		p = malloc(sizeof(uint16_t)*PTRSIZE);
+	LD	(IX+-15),BC
+;   36		/*
+;   37		fnameLen = 15;
+;   38		fname = malloc(fnameLen+1);
+;   39		os_GetStringInput("Brainfuck program to open:", fname, fnameLen);
+;   40		boot_NewLine();	
+;   41		*/
+;   42		
+;   43		PTRSIZE = 256;
+;   44		LOOPSIZE = 32;
+;   45	
+;   46		p = malloc(sizeof(uint16_t)*PTRSIZE);
 	LD	BC,512
 	PUSH	BC
 	CALL	_malloc
 	POP	BC
 	LD	(IX+-3),HL
-;   45		ptrNum = 0;
+;   47		ptrNum = 0;
 	LD	(IX+-8),0
 	LD	(IX+-7),0
-;   46		tempPtr = p;
-;   47		memset(p, 0x00, PTRSIZE);
+;   48		tempPtr = p;
+;   49		memset(p, 0x00, PTRSIZE);
 	LD	BC,256
 	PUSH	BC
 	LD	BC,0
@@ -100,16 +88,16 @@ _main:
 	POP	BC
 	POP	BC
 	POP	BC
-;   48	
-;   49		l = malloc(sizeof(uint16_t)*LOOPSIZE);
+;   50	
+;   51		l = malloc(sizeof(uint16_t)*LOOPSIZE);
 	LD	BC,64
 	PUSH	BC
 	CALL	_malloc
 	POP	BC
 	LD	(IX+-6),HL
-;   50		tempLoop = l;
-;   51		
-;   52		f = ti_OpenVar(fname, "r", 5);
+;   52		tempLoop = l;
+;   53		
+;   54		f = ti_OpenVar(fname, "r", 5);
 	LD	BC,5
 	PUSH	BC
 	LD	BC,L__1
@@ -121,36 +109,36 @@ _main:
 	POP	BC
 	POP	BC
 	LD	(IX+-9),A
-;   53		free(fname);
+;   55		free(fname);
 	LD	BC,(IX+-15)
 	PUSH	BC
 	CALL	_free
 	POP	BC
-;   54	
-;   55		if(!f){
+;   56	
+;   57		if(!f){
 	LD	A,(IX+-9)
 	OR	A,A
 	JR	NZ,L_28
-;   56			os_PutStrFull("Program Not Found!");
+;   58			os_PutStrFull("Program Not Found!");
 	LD	BC,L__3
 	PUSH	BC
 	CALL	_os_PutStrFull
 	POP	BC
-;   57			while(!os_GetCSC());
+;   59			while(!os_GetCSC());
 L_4:
 	CALL	_os_GetCSC
 	OR	A,A
 	JR	Z,L_4
-;   58			return 1;
+;   60			return 1;
 	LD	HL,1
 	JR	L_34
-;   59		}
-;   60		
-;   61		/* Compile Loop */
-;   62		while((c = ti_GetC(f)) != EOF)
+;   61		}
+;   62		
+;   63		/* Compile Loop */
+;   64		while((c = ti_GetC(f)) != EOF)
 L_29:
-;   63		{
-;   64			switch(c)
+;   65		{
+;   66			switch(c)
 	LD	A,(IX+-10)
 	SEXT	HL
 	LD	L,(IX+-10)
@@ -183,10 +171,10 @@ L__5:
 
 	DW24	L_28	
 
-;   65			{
-;   66				case 17:
+;   67			{
+;   68				case 17:
 L_7:
-;   67					if(ptrNum + 1 < PTRSIZE)
+;   69					if(ptrNum + 1 < PTRSIZE)
 	LD	BC,(IX+-8)
 	CALL	__stoiu
 	INC	HL
@@ -194,41 +182,41 @@ L_7:
 	LD	BC,256
 	SBC	HL,BC
 	JP	P,L_28
-;   68					{
-;   69						++p;
+;   70					{
+;   71						++p;
 	LD	IY,(IX+-3)
 	LEA	IY,IY+2
 	LD	(IX+-3),IY
-;   70						++ptrNum;
+;   72						++ptrNum;
 	LD	HL,(IX+-8)
 	INC	HL
 	LD	(IX+-8),L
 	LD	(IX+-7),H
-;   71					}
-;   72					break;
+;   73					}
+;   74					break;
 	JR	L_28
-;   73				case 16:
+;   75				case 16:
 L_10:
-;   74					if(ptrNum != 0)
+;   76					if(ptrNum != 0)
 	LD	HL,(IX+-8)
 	CALL	__scmpzero
 	JR	Z,L_28
-;   75					{
-;   76						--p;
+;   77					{
+;   78						--p;
 	LD	IY,(IX+-3)
 	LEA	BC,IY+-2
 	LD	(IX+-3),BC
-;   77						--ptrNum;
+;   79						--ptrNum;
 	LD	IY,(IX+-8)
 	LEA	HL,IY+-1
 	LD	(IX+-8),L
 	LD	(IX+-7),H
-;   78					}
-;   79					break;
+;   80					}
+;   81					break;
 	JR	L_28
-;   80				case 112:
+;   82				case 112:
 L_13:
-;   81					++*p;
+;   83					++*p;
 	LD	HL,(IX+-3)
 	LD	BC,(HL)
 	INC	BC
@@ -236,11 +224,11 @@ L_13:
 	LD	(HL),C
 	INC	HL
 	LD	(HL),B
-;   82					break;
+;   84					break;
 	JR	L_28
-;   83				case 113:
+;   85				case 113:
 L_14:
-;   84					if(*p <= 0)
+;   86					if(*p <= 0)
 	LD	HL,(IX+-3)
 	LD	BC,(HL)
 	CALL	__stoiu
@@ -251,15 +239,15 @@ L_14:
 	SBC	HL,BC
 	CALL	__setflag
 	JP	M,L_16
-;   85						*p = 0;
+;   87						*p = 0;
 	LD	HL,(IX+-3)
 	LD	(HL),0
 	INC	HL
 	LD	(HL),0
-;   86					else
+;   88					else
 	JR	L_28
 L_16:
-;   87						--*p;
+;   89						--*p;
 	LD	HL,(IX+-3)
 	LD	IY,(HL)
 	LEA	BC,IY+-1
@@ -267,21 +255,21 @@ L_16:
 	LD	(HL),C
 	INC	HL
 	LD	(HL),B
-;   88					break;
+;   90					break;
 	JR	L_28
-;   89				case 58:
+;   91				case 58:
 L_18:
-;   90					{
-;   91					char op[2];
-;   92					op[1] = 0x00;
+;   92					{
+;   93					char op[2];
+;   94					op[1] = 0x00;
 	LEA	HL,IX+-12
 	INC	HL
 	LD	(HL),0
-;   93					op[0] = *p;
+;   95					op[0] = *p;
 	LD	HL,(IX+-3)
 	LD	A,(HL)
 	LD	(IX+-12),A
-;   94					if(*p != 10)
+;   96					if(*p != 10)
 	LD	HL,(IX+-3)
 	LD	BC,(HL)
 	CALL	__stoiu
@@ -289,36 +277,36 @@ L_18:
 	LD	BC,10
 	SBC	HL,BC
 	JR	Z,L_20
-;   95						os_PutStrFull(op);
+;   97						os_PutStrFull(op);
 	PEA	IX+-12
 	CALL	_os_PutStrFull
 	POP	BC
-;   96					else
+;   98					else
 	JR	L_28
 L_20:
-;   97						boot_NewLine();
+;   99						boot_NewLine();
 	CALL	_boot_NewLine
-;   98					break;
+;  100					break;
 	JR	L_28
-;   99					 }
-;  100				case 43:
+;  101					 }
+;  102				case 43:
 L_22:
-;  101					*p = os_GetCSC();
+;  103					*p = os_GetCSC();
 	CALL	_os_GetCSC
 	LD	C,A
 	LD	HL,(IX+-3)
 	LD	(HL),C
 	INC	HL
 	LD	(HL),0
-;  102					break;
+;  104					break;
 	JR	L_28
-;  103				case 6:
+;  105				case 6:
 L_23:
-;  104					++l;
+;  106					++l;
 	LD	IY,(IX+-6)
 	LEA	IY,IY+2
 	LD	(IX+-6),IY
-;  105					*l = ti_Tell(f);
+;  107					*l = ti_Tell(f);
 	LD	C,(IX+-9)
 	LD	B,0
 	PUSH	BC
@@ -329,30 +317,30 @@ L_23:
 	LD	(HL),C
 	INC	HL
 	LD	(HL),B
-;  106					
-;  107					break;
+;  108					
+;  109					break;
 	JR	L_28
-;  108				case 7:
+;  110				case 7:
 L_24:
-;  109					if(*p == 0)
+;  111					if(*p == 0)
 	LD	HL,(IX+-3)
 	LD	HL,(HL)
 	CALL	__scmpzero
 	JR	NZ,L_26
-;  110					{	
-;  111						*l = 0;
+;  112					{	
+;  113						*l = 0;
 	LD	HL,(IX+-6)
 	LD	(HL),0
 	INC	HL
 	LD	(HL),0
-;  112						--l;
+;  114						--l;
 	LD	IY,(IX+-6)
 	LEA	IY,IY+-2
 	LD	(IX+-6),IY
-;  113					}else{
+;  115					}else{
 	JR	L_28
 L_26:
-;  114						ti_Seek(*l, SEEK_SET, f);
+;  116						ti_Seek(*l, SEEK_SET, f);
 	LD	C,(IX+-9)
 	LD	DE,0
 	LD	B,0
@@ -366,11 +354,11 @@ L_26:
 	POP	BC
 	POP	BC
 	POP	BC
-;  115					}
-;  116					break;
-;  117			}
-;  118			
-;  119		}
+;  117					}
+;  118					break;
+;  119			}
+;  120			
+;  121		}
 L_28:
 	LD	C,(IX+-9)
 	LD	B,0
@@ -381,38 +369,38 @@ L_28:
 	LD	A,(IX+-10)
 	CP	A,-1
 	JR	NZ,L_29
-;  120		/* Close Files */
-;  121		ti_Close(f);
+;  122		/* Close Files */
+;  123		ti_Close(f);
 	LD	C,(IX+-9)
 	LD	B,0
 	PUSH	BC
 	CALL	_ti_Close
 	POP	BC
-;  122		free(l);
+;  124		free(l);
 	LD	BC,(IX+-6)
 	PUSH	BC
 	LD	(IX+-18),HL
 	CALL	_free
 	LD	HL,(IX+-18)
 	POP	BC
-;  123		free(p);
+;  125		free(p);
 	LD	BC,(IX+-3)
 	PUSH	BC
 	LD	(IX+-18),HL
 	CALL	_free
 	LD	HL,(IX+-18)
 	POP	BC
-;  124		
-;  125		while(!os_GetCSC());
+;  126		
+;  127		while(!os_GetCSC());
 L_33:
 	LD	(IX+-18),HL
 	CALL	_os_GetCSC
 	LD	HL,(IX+-18)
 	OR	A,A
 	JR	Z,L_33
-;  126	
-;  127	
-;  128	}	
+;  128	
+;  129	
+;  130	}	
 L_34:
 	LD	SP,IX
 	POP	IX
@@ -425,13 +413,12 @@ L_34:
 ;_ti_GetC                            IMPORT  -----   function
 ;_ti_Seek                            IMPORT  -----   function
 ;_ti_Tell                            IMPORT  -----   function
+;_boot_NewLine                       IMPORT  -----   function
 ;_os_GetCSC                          IMPORT  -----   function
 ;_os_PutStrFull                      IMPORT  -----   function
 ;_free                               IMPORT  -----   function
 ;_ti_OpenVar                         IMPORT  -----   function
 ;_memset                             IMPORT  -----   function
-;_boot_NewLine                       IMPORT  -----   function
-;_os_GetStringInput                  IMPORT  -----   function
 ;_malloc                             IMPORT  -----   function
 ;_ti_CloseAll                        IMPORT  -----   function
 ;_asm_DrawStatusBar                  IMPORT  -----   function
@@ -455,7 +442,7 @@ L_34:
 
 	SEGMENT STRSECT
 L__0:
-	DB	"Brainfuck program to open:"
+	DB	"OP"
 	DB	0
 L__1:
 	DB	"r"
@@ -474,7 +461,6 @@ L__3:
 	XREF _asm_HomeUp:ROM
 	XREF __OS:ROM
 	XREF _os_GetCSC:ROM
-	XREF _os_GetStringInput:ROM
 	XREF _os_PutStrFull:ROM
 	XREF _boot_NewLine:ROM
 	XREF _free:ROM

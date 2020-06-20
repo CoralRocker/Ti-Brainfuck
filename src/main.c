@@ -32,12 +32,14 @@ int main(int argc, char **argv)
 	ti_CloseAll();
 
 	/* Variable Instantiations */
-	//fname = "OP";
+	fname = "OP";
+	/*
 	fnameLen = 15;
 	fname = malloc(fnameLen+1);
 	os_GetStringInput("Brainfuck program to open:", fname, fnameLen);
 	boot_NewLine();	
-
+	*/
+	
 	PTRSIZE = 256;
 	LOOPSIZE = 32;
 

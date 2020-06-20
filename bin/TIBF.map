@@ -6,10 +6,10 @@ libs     D1A8DA D1A906            2Ch
 startup  D1A906 D1A945            3Fh
 cleanup  D1A945 D1A959            14h
 exit     D1A959 D1A95F             6h
-code     D1A95F D1AF0A           5ABh
-data     D1AF0A D1AF2F            25h
-strsect  D1AF2F D1AF5F            30h
-text     D1AF5F D1AF5F             0h
+code     D1A95F D1AE01           4A2h
+data     D1AE01 D1AE26            25h
+strsect  D1AE26 D1AE3E            18h
+text     D1AE3E D1AE3E             0h
 bss      D031F6 D031FC D13FD6      6h
 header   D1A87F D1A882             3h
 
@@ -150,20 +150,19 @@ _asm_DisableAPD           = 021134
 _asm_EnableAPD            = 021138
 _asm_DrawStatusBar        = 021A3C
 _asm_ArcChk               = 022040
-_os_GetStringInput        = D1A95F
-_os_DisableHomeTextBuffer = D1AA49
-_os_EnableHomeTextBuffer  = D1AA5B
-__OS                      = D1AA6D
+_os_DisableHomeTextBuffer = D1A95F
+_os_EnableHomeTextBuffer  = D1A971
+__OS                      = D1A983
 __setflag                 = 000218
-__frameset                = D1AA77
+__frameset                = D1A98D
 __case8                   = 000124
 __scmpzero                = 000204
-_memset                   = D1AA85
+_memset                   = D1A99B
 __icmpzero                = 000138
-__s_sbrk                  = D1AA9C
+__s_sbrk                  = D1A9B2
 __stoiu                   = 000264
-_free                     = D1AABC
-_malloc                   = D1ABEB
+_free                     = D1A9D2
+_malloc                   = D1AB01
 __alloc_base              = D031F6
 __findlibload             = D1A882
 __ccleanup                = D1A945
@@ -173,7 +172,7 @@ _exit                     = D1A95B
 __exit                    = D1A934
 __exitsp                  = D1A934
 __errsp                   = D1A934
-_main                     = D1AC93
+_main                     = D1ABA9
 _ti_CloseAll              = D1A8EE
 _ti_OpenVar               = D1A8F2
 _ti_Close                 = D1A8F6
